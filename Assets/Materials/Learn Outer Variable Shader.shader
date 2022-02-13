@@ -7,6 +7,7 @@ Shader "Learn Outer Variable"
         _Red ("Color Red", Range(0,1)) = 0
         _Green ("Color Green", Range(0,1)) = 0
         _Blue ("Color Blue", Range(0,1)) = 0
+        _BrightDark ("Brightness & Darkness", Range(-1,1)) = 0
     }
     SubShader
     {
@@ -31,11 +32,12 @@ Shader "Learn Outer Variable"
         float _Red;
         float _Blue;
         float _Green;
+        float _BrightDark;
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = float3(_Red, _Green, _Blue);
+            o.Albedo = float3(_Red, _Green, _Blue) + _BrightDark;
 
             o.Alpha = c.a;
         }
