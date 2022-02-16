@@ -14,9 +14,6 @@ Shader "Learn Unity Shader/Learn UV Flow"
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard noambient
 
-        // Use shader model 3.0 target, to get nicer looking lighting
-        #pragma target 3.0
-
         sampler2D _MainTex;
         float _FlowSpeedX;
         float _FlowSpeedY;
