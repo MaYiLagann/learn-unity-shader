@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Learn UV Fire Material
-  m_Shader: {fileID: 4800000, guid: 22a5dec783659bb4881a20cbca5890a7, type: 3}
+  m_Name: Learn UV Fire Material 2
+  m_Shader: {fileID: 4800000, guid: 33b9ea4f2689d4b4c9f13055015399c6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex2:
-        m_Texture: {fileID: 2800000, guid: 366fec6e9fc3ef940b623f25dea3f7b6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1a30133b9b67b87429cb4153c41298ba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
