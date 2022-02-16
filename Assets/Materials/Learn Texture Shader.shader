@@ -1,4 +1,4 @@
-Shader "Learn Texture"
+Shader "Learn Unity Shader/Learn Texture"
 {
     Properties
     {

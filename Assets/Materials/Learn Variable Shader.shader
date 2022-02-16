@@ -1,4 +1,4 @@
-Shader "Learn Variable"
+Shader "Learn Unity Shader/Learn Variable"
 {
     Properties
     {

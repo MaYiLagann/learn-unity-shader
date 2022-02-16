@@ -1,4 +1,4 @@
-Shader "Learn Default"
+Shader "Learn Unity Shader/Learn Default"
 {
     Properties
     {

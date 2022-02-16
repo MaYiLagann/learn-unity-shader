@@ -1,4 +1,4 @@
-Shader "Learn Texture Lerp"
+Shader "Learn Unity Shader/Learn Texture Lerp"
 {
     Properties
     {

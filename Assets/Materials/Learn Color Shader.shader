@@ -1,4 +1,4 @@
-Shader "Learn Color"
+Shader "Learn Unity Shader/Learn Color"
 {
     Properties
     {
