@@ -1,8 +1,10 @@
-Shader "Learn Unity Shader/Learn UV"
+Shader "Learn Unity Shader/Learn UV Flow"
 {
     Properties
     {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _FlowSpeedX ("Flow Speed X", float) = 0
+        _FlowSpeedY ("Flow Speed Y", float) = 0
     }
     SubShader
     {
@@ -16,6 +18,8 @@ Shader "Learn Unity Shader/Learn UV"
         #pragma target 3.0
 
         sampler2D _MainTex;
+        float _FlowSpeedX;
+        float _FlowSpeedY;
 
         struct Input
         {
@@ -24,7 +28,7 @@ Shader "Learn Unity Shader/Learn UV"
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
+            fixed4 c = tex2D (_MainTex, float2(IN.uv_MainTex.x + _Time.y * _FlowSpeedX, IN.uv_MainTex.y + _Time.y * _FlowSpeedY));
             o.Albedo = c.rgb;
 
             o.Alpha = c.a;

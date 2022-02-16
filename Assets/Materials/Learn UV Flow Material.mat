@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Learn UV Material
-  m_Shader: {fileID: 4800000, guid: 91c3e6792b2805e4e8e23b3895729a21, type: 3}
+  m_Name: Learn UV Flow Material
+  m_Shader: {fileID: 4800000, guid: 47ade7980db6bac4a9ee523012caaf20, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 13a306715e83fc849816cbe153e0e1b5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09336a13103588540816e095408d9f58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -62,6 +62,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FlowSpeedX: 0
+    - _FlowSpeedY: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -79,5 +81,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlowSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _TestColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
