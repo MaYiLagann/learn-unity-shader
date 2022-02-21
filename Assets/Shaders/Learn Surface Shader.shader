@@ -6,6 +6,7 @@ Shader "Learn Unity Shader/Learn Surface"
         _Metallic("Metallic", Range(0,1)) = 0
         _Smoothness("Smoothness", Range(0,1)) = 0
         _BumpMap ("Normal Map", 2D) = "bump" {}
+        _Occlusion ("Occlusion", 2D) = "white" {}
     }
     SubShader
     {
@@ -13,10 +14,11 @@ Shader "Learn Unity Shader/Learn Surface"
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard noambient
+        #pragma surface surf Standard
 
         sampler2D _MainTex;
         sampler2D _BumpMap;
+        sampler2D _Occlusion;
         float _Metallic;
         float _Smoothness;
 
@@ -36,6 +38,7 @@ Shader "Learn Unity Shader/Learn Surface"
             o.Metallic = _Metallic;
             o.Smoothness = _Smoothness;
             o.Normal = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap));
+            o.Occlusion = tex2D (_Occlusion, IN.uv_MainTex);
 
             o.Alpha = c.a;
         }
