@@ -47,7 +47,7 @@ Shader "Learn Unity Shader/Learn Vertex Mask Shader 2"
             o.Albedo = lerp(o.Albedo, f.rgb, IN.color.b);
             o.Normal = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap));
             o.Metallic = _Metallic;
-            o.Smoothness = _Smoothness;
+            o.Smoothness = (IN.color.g * 0.5) * _Smoothness + 0.3;
 
             o.Alpha = c.a;
         }
