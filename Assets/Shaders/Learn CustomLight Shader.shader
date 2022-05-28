@@ -12,7 +12,7 @@ Shader "Learn Unity Shader/Learn CustomLight"
 
         CGPROGRAM
         // Physically based test lighting model, and enable shadows on all light types
-        #pragma surface surf Test noambient
+        #pragma surface surf Test
 
         sampler2D _MainTex;
         sampler2D _BumpMap;
@@ -34,8 +34,14 @@ Shader "Learn Unity Shader/Learn CustomLight"
 
         float4 LightingTest (SurfaceOutput s, float3 lightDir, float atten)
         {
-            float ndot1 = dot(s.Normal, lightDir) * 0.5 + 0.5;
-            return ndot1;
+            float ndot1 = saturate(dot(s.Normal, lightDir));
+            // float ndot1 = dot(s.Normal, lightDir) * 0.5 + 0.5;
+
+            float4 final;
+            final.rgb = ndot1 * s.Albedo * _LightColor0.rgb * atten;
+            final.a = s.Alpha;
+
+            return final;
         }
         ENDCG
     }
