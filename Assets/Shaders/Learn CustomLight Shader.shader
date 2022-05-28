@@ -34,7 +34,7 @@ Shader "Learn Unity Shader/Learn CustomLight"
 
         float4 LightingTest (SurfaceOutput s, float3 lightDir, float atten)
         {
-            float ndot1 = saturate(dot(s.Normal, lightDir));
+            float ndot1 = dot(s.Normal, lightDir) * 0.5 + 0.5;
             return ndot1;
         }
         ENDCG
