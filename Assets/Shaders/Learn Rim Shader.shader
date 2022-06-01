@@ -17,14 +17,18 @@ Shader "Learn Unity Shader/Learn Rim"
         struct Input
         {
             float2 uv_MainTex;
+            float3 viewDir;
         };
 
         void surf (Input IN, inout SurfaceOutput o)
         {
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
 
-            o.Albedo = c.rgb;
+            o.Albedo = 0;
             o.Alpha = c.a;
+
+            float rim = dot(o.Normal, IN.viewDir);
+            o.Emission = pow(1 - rim, 3);
         }
         ENDCG
     }
