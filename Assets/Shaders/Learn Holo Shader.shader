@@ -5,6 +5,7 @@ Shader "Learn Unity Shader/Learn Holo"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimPower ("Rim Power", Range(1,10)) = 1
+        _BlinkSpeed ("Blink Speed", Range(1,10)) = 1
     }
     SubShader
     {
@@ -17,6 +18,7 @@ Shader "Learn Unity Shader/Learn Holo"
         sampler2D _MainTex;
         float4 _RimColor;
         float _RimPower;
+        float _BlinkSpeed;
 
         struct Input
         {
@@ -33,7 +35,7 @@ Shader "Learn Unity Shader/Learn Holo"
             float rim = saturate(dot(o.Normal, IN.viewDir));
             rim = pow(1 - rim, _RimPower);
 
-            o.Alpha = rim;
+            o.Alpha = rim * (sin(_Time.y * _BlinkSpeed) * 0.5 + 0.5);
         }
         ENDCG
     }
