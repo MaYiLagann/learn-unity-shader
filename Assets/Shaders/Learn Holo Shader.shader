@@ -7,6 +7,9 @@ Shader "Learn Unity Shader/Learn Holo"
         _RimPower ("Rim Power", Range(1,10)) = 1
         [MaterialToggle] _UseBlink ("Use Blink", float) = 0
         _BlinkSpeed ("Blink Speed", Range(1,10)) = 1
+        [MaterialToggle] _UseLine ("Use Line", float) = 0
+        _LinePower ("Line Power", Range(0,10)) = 1
+        _LineSpeed ("Line Speed", Range(-10,10)) = 1
     }
     SubShader
     {
@@ -19,13 +22,19 @@ Shader "Learn Unity Shader/Learn Holo"
         sampler2D _MainTex;
         float4 _RimColor;
         float _RimPower;
+
         float _UseBlink;
         float _BlinkSpeed;
+
+        float _UseLine;
+        float _LinePower;
+        float _LineSpeed;
 
         struct Input
         {
             float2 uv_MainTex;
             float3 viewDir;
+            float3 worldPos;
         };
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -40,6 +49,11 @@ Shader "Learn Unity Shader/Learn Holo"
             if (_UseBlink == 1)
             {
                 rim *= (sin(_Time.y * _BlinkSpeed) * 0.5 + 0.5);
+            }
+
+            if (_UseLine == 1)
+            {
+                rim += pow(frac(IN.worldPos.g * _LineSpeed - _Time.y), _LinePower);
             }
 
             o.Alpha = rim;

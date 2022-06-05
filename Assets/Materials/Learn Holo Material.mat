@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Learn Holo Material
   m_Shader: {fileID: 4800000, guid: 90ed936c034cecb4790cd90fac377eb1, type: 3}
-  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP
+  m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP _USELINE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -64,6 +64,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LinePower: 5
+    - _LineSize: 10
+    - _LineSpeed: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -74,6 +77,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseBlink: 0
+    - _UseLine: 1
     - _WhiteAdd: 0
     - _ZWrite: 1
     m_Colors:
