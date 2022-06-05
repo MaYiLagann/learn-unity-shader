@@ -64,7 +64,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LinePower: 5
+    - _LineHeight: 1
+    - _LinePower: 0.2
     - _LineSize: 10
     - _LineSpeed: 1
     - _Metallic: 0
