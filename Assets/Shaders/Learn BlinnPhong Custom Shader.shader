@@ -32,13 +32,18 @@ Shader "Learn Unity Shader/Learn BlinnPhong Custom"
             o.Alpha = c.a;
         }
 
-        float4 LightingTest (SurfaceOutput s, float3 lightDir, float atten)
+        float4 LightingTest (SurfaceOutput s, float3 lightDir, float3 viewDir, float atten)
         {
             float4 final;
 
             float3 DiffColor;
             float ndot1 = saturate(dot(s.Normal, lightDir));
             DiffColor = ndot1 * s.Albedo * _LightColor0.rgb * atten;
+
+            // Spec term
+            float3 H = normalize(lightDir + viewDir);
+
+            return float4(H, 1);
 
             final.rgb = DiffColor.rgb;
             final.a = s.Alpha;
