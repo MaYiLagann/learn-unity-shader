@@ -42,8 +42,9 @@ Shader "Learn Unity Shader/Learn BlinnPhong Custom"
 
             // Spec term
             float3 H = normalize(lightDir + viewDir);
+            float spec = saturate(dot(H, s.Normal));
 
-            return float4(H, 1);
+            return pow(spec, 100);
 
             final.rgb = DiffColor.rgb;
             final.a = s.Alpha;
