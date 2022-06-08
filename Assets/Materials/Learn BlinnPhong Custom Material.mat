@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Learn BlinnPhong Color Material
+  m_Name: Learn BlinnPhong Custom Material
   m_Shader: {fileID: 4800000, guid: d62944ac2fc01f04d9cb4ed95f6508c9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
