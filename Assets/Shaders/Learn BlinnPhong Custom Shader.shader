@@ -7,6 +7,8 @@ Shader "Learn Unity Shader/Learn BlinnPhong Custom"
         _GlossTex ("Gloss Map", 2D) = "white" {}
         _SpecColor ("Specular Color", color) = (1,1,1,1)
         _SpecPower ("Specular Power", Range(10, 200)) = 100
+        _SpecColor2 ("Specular Color 2", color) = (1,1,1,1)
+        _SpecPower2 ("Specular Power 2", Range(10, 200)) = 100
         _RimColor ("Rim Color", Color) = (1,1,1,1)
         _RimPower ("Rim Power", Range(1,10)) = 1
     }
@@ -22,6 +24,8 @@ Shader "Learn Unity Shader/Learn BlinnPhong Custom"
         sampler2D _BumpMap;
         sampler2D _GlossTex;
         float _SpecPower;
+        float4 _SpecColor2;
+        float _SpecPower2;
         float4 _RimColor;
         float _RimPower;
 
@@ -64,8 +68,12 @@ Shader "Learn Unity Shader/Learn BlinnPhong Custom"
             float invrim = 1 - rim;
             rimColor = pow(invrim, _RimPower) * _RimColor.rgb;
 
+            // Fake spec term
+            float3 SpecColor2;
+            SpecColor2 = pow(rim, _SpecPower2) * _SpecColor2.rgb * s.Gloss;
+
             // Final term
-            final.rgb = DiffColor.rgb + SpecColor.rgb + rimColor.rgb;
+            final.rgb = DiffColor.rgb + SpecColor.rgb + rimColor.rgb + SpecColor2.rgb;
             final.a = s.Alpha;
 
             return final;
