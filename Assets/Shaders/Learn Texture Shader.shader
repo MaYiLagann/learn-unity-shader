@@ -22,7 +22,7 @@ Shader "Learn Unity Shader/Learn Texture"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
-            o.Albedo = (c.r,c.g,c.b) / 3;
+            o.Albedo = float3(c.r,c.g,c.b) / 3;
             o.Alpha = c.a;
         }
         ENDCG
