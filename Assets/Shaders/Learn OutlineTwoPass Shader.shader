@@ -12,23 +12,30 @@ Shader "Learn Unity Shader/Learn Outline Two Pass"
 
         CGPROGRAM
         // Physically based lambert lighting model, and enable shadows on all light types
-        #pragma surface surf Lambert noambient
-
-        sampler2D _MainTex;
+        #pragma surface surf Nolight noambient vertex:vert noshadow
 
         struct Input
         {
             float2 uv_MainTex;
         };
 
-        void surf (Input IN, inout SurfaceOutput o)
+        void vert(inout appdata_full v)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
+            v.vertex.xyz += v.normal.xyz * 0.005;
+        }
 
-            o.Albedo = c.rgb;
-            o.Alpha = c.a;
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+
+        }
+
+        float4 LightingNolight(SurfaceOutput s, float3 lightDir, float atten)
+        {
+            return float4(0, 0, 0, 1);
         }
         ENDCG
+
+        cull back
 
         // 2nd pass
         CGPROGRAM
