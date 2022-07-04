@@ -9,6 +9,7 @@ Shader "Learn Unity Shader/Learn Alpha Testing"
     SubShader
     {
         Tags { "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
+        cull off
 
         CGPROGRAM
         #pragma surface surf Lambert alphatest:_CutOff
