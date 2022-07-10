@@ -7,10 +7,11 @@ Shader "Learn Unity Shader/Learn Alpha Blend"
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" }
-        cull off
+        zwrite off
+        blend SrcAlpha OneMinusSrcAlpha
 
         CGPROGRAM
-        #pragma surface surf Lambert alpha:fade
+        #pragma surface surf Lambert alpha:fade keepalpha
 
         sampler2D _MainTex;
 
