@@ -69,7 +69,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Alpha: 0.5
-    - _BlinkSpeed: 0.1
+    - _BlinkSpeed: 0.05
     - _Blue: 1
     - _BrightDark: 0
     - _BumpScale: 1
