@@ -5,13 +5,15 @@ Shader "Learn Unity Shader/Learn Leaves"
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Color ("Main Color", Color) = (1,1,1,1)
         _Cutoff ("Cutoff", float) = 0.5
+        _Move ("Move", Range(0, 0.5)) = 0.1
+        _Timing ("Timing", Range(0, 0.5)) = 1
     }
     SubShader
     {
         Tags { "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
 
         CGPROGRAM
-        #pragma surface surf Lambert alphatest:_Cutoff vertex:vert
+        #pragma surface surf Lambert alphatest:_Cutoff vertex:vert addshadow
 
         sampler2D _MainTex;
         float _Move;
@@ -19,7 +21,7 @@ Shader "Learn Unity Shader/Learn Leaves"
 
         void vert(inout appdata_full v)
         {
-            v.vertex.y += sin(_Time.y * 0.1);
+            v.vertex.y += sin(_Time.y * _Timing) * _Move * v.color.r;
         }
 
         struct Input
