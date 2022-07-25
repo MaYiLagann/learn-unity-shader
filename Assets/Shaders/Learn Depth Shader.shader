@@ -23,7 +23,7 @@ Shader "Learn Unity Shader/Learn Depth"
             }
             float2 Depth = tex2D(_CameraDepthTexture, sPos);
 
-            o.Emission = Depth.r * 100;
+            o.Emission = saturate(Depth.r * 100);
             o.Alpha = 1;
         }
         ENDCG
