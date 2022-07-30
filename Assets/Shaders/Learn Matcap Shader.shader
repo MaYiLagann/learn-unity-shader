@@ -26,7 +26,8 @@ Shader "Learn Unity Shader/Learn Matcap"
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
 
             float3 viewNormal = mul((float3x3)UNITY_MATRIX_V, IN.worldNormal.rgb);
-            o.Emission = viewNormal;
+            float2 matcapUv = viewNormal.xy * 0.5 + 0.5;
+            o.Emission = tex2D (_Matcap, matcapUv) * c.rgb;
 
             o.Alpha = c.a;
         }
