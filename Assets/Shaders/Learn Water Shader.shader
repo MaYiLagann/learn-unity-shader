@@ -2,44 +2,40 @@ Shader "Learn Unity Shader/Learn Water Reflection"
 {
     Properties
     {
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _BumpMap ("Normal Map", 2D) = "bump" {}
-        _MaskMap ("Mask Map", 2D) = "white" {}
         _Cube ("Cubemap", Cube) = "" {}
+        _Alpha ("Alpha", Range(0,1)) = 0.2
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 
         CGPROGRAM
-        // Physically based lambert lighting model, and enable shadows on all light types
-        #pragma surface surf Lambert noambient
+        #pragma surface surf Lambert noambient alpha:fade
 
-        sampler2D _MainTex;
         sampler2D _BumpMap;
-        sampler2D _MaskMap;
         samplerCUBE _Cube;
+        float _Alpha;
 
         struct Input
         {
-            float2 uv_MainTex;
             float2 uv_BumpMap;
-            float2 uv_MaskMap;
             float3 worldRefl;
+            float3 viewDir;
             INTERNAL_DATA
         };
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            o.Normal = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap));
+            float3 normal1 = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap + _Time.x * 0.2));
+            float3 normal2 = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap - _Time.x * 0.2));
+            o.Normal = (normal1 + normal2) / 2;
 
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
             float4 re = texCUBE (_Cube, WorldReflectionVector(IN, o.Normal));
-            float m = tex2D (_MaskMap, IN.uv_MaskMap);
-
-            o.Albedo = c.rgb * (1 - m.r);
-            o.Emission = re.rgb * m.r;
-            o.Alpha = c.a;
+            float rim = saturate(dot(o.Normal, IN.viewDir));
+            rim = pow(1 - rim, 1.5);
+            o.Emission = re * rim * 2;
+            o.Alpha = saturate(rim * 0.5);
         }
         ENDCG
     }
