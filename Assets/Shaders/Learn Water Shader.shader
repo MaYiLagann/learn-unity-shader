@@ -7,19 +7,25 @@ Shader "Learn Unity Shader/Learn Water Reflection"
         _SPColor("Specular Color", Color) = (1,1,1,1)
         _SPPower("Specular Power", Range(0, 300)) = 150
         _SPMulti("Specular Multiply", Range(1, 10)) = 3
+        _WaveH("Wave Height", Range(0, 0.5)) = 0.1
+        _WaveL("Wave Length", Range(5, 20)) = 12
+        _WaveT("Wave Timing", Range(0, 10)) = 1
     }
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 
         CGPROGRAM
-        #pragma surface surf WaterSpecular noambient alpha:fade
+        #pragma surface surf WaterSpecular noambient alpha:fade vertex:vert
 
         sampler2D _BumpMap;
         samplerCUBE _Cube;
         float4 _SPColor;
         float _SPPower;
         float _SPMulti;
+        float _WaveH;
+        float _WaveL;
+        float _WaveT;
 
         struct Input
         {
@@ -28,6 +34,17 @@ Shader "Learn Unity Shader/Learn Water Reflection"
             float3 viewDir;
             INTERNAL_DATA
         };
+
+        void vert (inout appdata_full v)
+        {
+            float movement = 0;
+
+            movement += sin(abs((v.texcoord.x * 4 - 2) * _WaveL) * _Time.y * _WaveT) * _WaveH;
+            movement += sin(abs((v.texcoord.y * 4 - 2) * _WaveL) * _Time.y * _WaveT) * _WaveH;
+            movement /= 2;
+
+            v.vertex.y += movement;
+        }
 
         void surf (Input IN, inout SurfaceOutput o)
         {
