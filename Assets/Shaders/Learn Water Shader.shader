@@ -10,28 +10,33 @@ Shader "Learn Unity Shader/Learn Water Reflection"
         _WaveH("Wave Height", Range(0, 0.5)) = 0.1
         _WaveL("Wave Length", Range(5, 20)) = 12
         _WaveT("Wave Timing", Range(0, 10)) = 1
+        _Refract ("Refract Strength", Range(0, 0.5)) = 0.1
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="Opaque" }
+        GrabPass {}
 
         CGPROGRAM
         #pragma surface surf WaterSpecular noambient alpha:fade vertex:vert
 
         sampler2D _BumpMap;
         samplerCUBE _Cube;
+        sampler2D _GrabTexture;
         float4 _SPColor;
         float _SPPower;
         float _SPMulti;
         float _WaveH;
         float _WaveL;
         float _WaveT;
+        float _Refract;
 
         struct Input
         {
             float2 uv_BumpMap;
             float3 worldRefl;
             float3 viewDir;
+            float4 screenPos;
             INTERNAL_DATA
         };
 
@@ -52,13 +57,23 @@ Shader "Learn Unity Shader/Learn Water Reflection"
             float3 normal2 = UnpackNormal(tex2D (_BumpMap, IN.uv_BumpMap - _Time.x * 0.2));
             o.Normal = (normal1 + normal2) / 2;
 
+            float4 refColor = texCUBE (_Cube, WorldReflectionVector(IN, o.Normal));
+
+            // Refraction term
+            float3 screenUV = IN.screenPos.rgb;
+            if (IN.screenPos.a != 0)
+            {
+                screenUV /= IN.screenPos.a;
+            }
+            float3 refraction = tex2D (_GrabTexture, (screenUV.xy + o.Normal.xy * _Refract));
+
             // Rim term
-            float4 re = texCUBE (_Cube, WorldReflectionVector(IN, o.Normal));
             float rim = saturate(dot(o.Normal, IN.viewDir));
             rim = pow(1 - rim, 1.5);
 
-            o.Emission = re * rim;
-            o.Alpha = saturate(rim * 0.5);
+            o.Emission = (refColor * rim + refraction) * 0.5;
+            // o.Alpha = saturate(rim * 0.5);
+            o.Alpha = 1;
         }
 
         float4 LightingWaterSpecular(SurfaceOutput s, float3 lightDir, float3 viewDir, float atten)

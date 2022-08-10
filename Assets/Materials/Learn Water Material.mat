@@ -85,6 +85,7 @@ Material:
     - _Parallax: 0.02
     - _Red: 0
     - _Reflection: 0.5
+    - _Refract: 0.1
     - _SPMulti: 3
     - _SPPower: 50
     - _Smoothness: 0.7
