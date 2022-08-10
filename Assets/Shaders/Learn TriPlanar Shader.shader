@@ -1,4 +1,4 @@
-Shader "Learn Unity Shader/Learn Lambert"
+Shader "Learn Unity Shader/Learn Triplanar"
 {
     Properties
     {
@@ -17,14 +17,27 @@ Shader "Learn Unity Shader/Learn Lambert"
         struct Input
         {
             float2 uv_MainTex;
+            float3 worldPos;
+            float3 worldNormal;
         };
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
+            // Create TriUV
+            float2 topUV = float2 (IN.worldPos.x, IN.worldPos.z);
+            float2 frontUV = float2 (IN.worldPos.x, IN.worldPos.y);
+            float2 sideUV = float2 (IN.worldPos.z, IN.worldPos.y);
 
-            o.Albedo = c.rgb;
-            o.Alpha = c.a;
+            // Textures
+            fixed4 topTex = tex2D (_MainTex, topUV);
+            fixed4 frontTex = tex2D (_MainTex, frontUV);
+            fixed4 sideTex = tex2D (_MainTex, sideUV);
+
+            fixed3 result = lerp(topTex, frontTex, abs(IN.worldNormal.z));
+            result = lerp(result, sideTex, abs(IN.worldNormal.x));
+
+            o.Albedo = result.rgb;
+            o.Alpha = topTex.a;
         }
         ENDCG
     }
