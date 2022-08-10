@@ -2,7 +2,10 @@ Shader "Learn Unity Shader/Learn Triplanar"
 {
     Properties
     {
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        [NoScaleOffset]_MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _MainTexUV ("TileU, TileV, OffsetU, OffsetV", Vector) = (1,1,0,0)
+        [NoScaleOffset]_MainTex2 ("Albedo Side (RGB)", 2D) = "white" {}
+        _MainTex2UV ("TileU, TileV, OffsetU, OffsetV", Vector) = (1,1,0,0)
     }
     SubShader
     {
@@ -13,10 +16,12 @@ Shader "Learn Unity Shader/Learn Triplanar"
         #pragma surface surf Lambert noambient
 
         sampler2D _MainTex;
+        sampler2D _MainTex2;
+        float4 _MainTexUV;
+        float4 _MainTex2UV;
 
         struct Input
         {
-            float2 uv_MainTex;
             float3 worldPos;
             float3 worldNormal;
         };
@@ -29,14 +34,14 @@ Shader "Learn Unity Shader/Learn Triplanar"
             float2 sideUV = float2 (IN.worldPos.z, IN.worldPos.y);
 
             // Textures
-            fixed4 topTex = tex2D (_MainTex, topUV);
-            fixed4 frontTex = tex2D (_MainTex, frontUV);
-            fixed4 sideTex = tex2D (_MainTex, sideUV);
+            fixed4 topTex = tex2D (_MainTex, topUV * _MainTexUV.xy + _MainTexUV.zw);
+            fixed4 frontTex = tex2D (_MainTex2, frontUV * _MainTex2UV.xy + _MainTex2UV.zw);
+            fixed4 sideTex = tex2D (_MainTex2, sideUV * _MainTex2UV.xy + _MainTex2UV.zw);
 
             fixed3 result = lerp(topTex, frontTex, abs(IN.worldNormal.z));
             result = lerp(result, sideTex, abs(IN.worldNormal.x));
 
-            o.Albedo = result.rgb;
+            o.Albedo = result;
             o.Alpha = topTex.a;
         }
         ENDCG
